@@ -33,10 +33,28 @@
 
 Для реализации основного меню можно использовать пример ниже или написать свой
 """
+import os
+
+
 def bank():
-    money = 0
+    file_money = 'money.txt'
+    file_orders = 'orders.txt'
+    if os.path.isfile(file_money):
+        with open(file_money, 'r') as f:
+            money = float(f.read())
+    else:
+        money = 0
+
     lst_shop = []
     lst_m = []
+    if os.path.isfile(file_orders):
+        with open(file_orders, 'r') as f:
+            lst = f.read().split(';')
+            for orders in lst:
+                if orders != '':
+                    order = orders.split(':')
+                    lst_shop.append(order[0])
+                    lst_m.append(float(order[1]))
     while True:
         print('1. пополнение счета')
         print('2. покупка')
@@ -59,6 +77,16 @@ def bank():
             for i in range(len(lst_m)):
                 print(lst_shop[i] + ':', lst_m[i])
         elif choice == '4':
+            with open(file_money, 'w') as f:
+                f.write(str(money))
+            with open(file_orders, 'w') as f:
+                for i in range(len(lst_m)):
+                    f.write(lst_shop[i] + ':' + str(lst_m[i])+';')
+
             break
         else:
             print('Неверный пункт меню')
+
+
+if __name__ == '__main__':
+    bank()

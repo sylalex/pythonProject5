@@ -15,7 +15,8 @@ while True:
     print('8. Создатель программы')
     print('9. Играть в викторину')
     print('10. Мой банковский счет')
-    print('11. Выход')
+    print('11. Сохранить содержимое рабочей директории в файл')
+    print('12. Выход')
 
     i = int(input('Выберите пункт: '))
     if i == 1:
@@ -52,4 +53,23 @@ while True:
     elif i == 10:
         use_functions.bank()
     elif i == 11:
+        lines = 'files: '
+        is_p = False
+        for dir_ in os.listdir():
+            if os.path.isfile(dir_):
+                if is_p:
+                    lines += ', '
+                lines += dir_
+                is_p = True
+        lines += '\ndirs: '
+        is_p = False
+        for dir_ in os.listdir():
+            if os.path.isdir(dir_):
+                if is_p:
+                    lines += ', '
+                lines += dir_
+                is_p = True
+        with open('listdir.txt', 'w') as f:
+            f.write(lines)
+    elif i == 12:
         break
