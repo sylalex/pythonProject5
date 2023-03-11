@@ -18,58 +18,52 @@ while True:
     print('11. Сохранить содержимое рабочей директории в файл')
     print('12. Выход')
 
-    i = int(input('Выберите пункт: '))
-    if i == 1:
-        os.mkdir(input('Введите название папки: '))
-    elif i == 2:
-        dir_ = input('Введите название файла/папки: ')
-        if os.path.isdir(dir_):
-            os.rmdir(dir_)
-        else:
-            os.remove(dir_)
-    elif i == 3:
-        dir1 = input('Введите название папки/файла: ')
-        dir2 = input('Введите новое название папки/файла: ')
-        if os.path.isdir(dir1):
-            shutil.copytree(dir1, dir2, False)
-        else:
-            shutil.copy(dir1, dir2, follow_symlinks=False)
-    elif i == 4:
-        print(os.listdir())
-    elif i == 5:
-        for dir_ in os.listdir():
-            if os.path.isdir(dir_):
-                print(dir_)
-    elif i == 6:
-        for dir_ in os.listdir():
-            if os.path.isfile(dir_):
-                print(dir_)
-    elif i == 7:
-        print(platform.system())
-    elif i == 8:
-        print('Создатель программы: Alex')
-    elif i == 9:
-        borndayforewer.day_year('А.С.Пушкина')
-    elif i == 10:
-        use_functions.bank()
-    elif i == 11:
-        lines = 'files: '
-        is_p = False
-        for dir_ in os.listdir():
-            if os.path.isfile(dir_):
-                if is_p:
-                    lines += ', '
-                lines += dir_
-                is_p = True
-        lines += '\ndirs: '
-        is_p = False
-        for dir_ in os.listdir():
-            if os.path.isdir(dir_):
-                if is_p:
-                    lines += ', '
-                lines += dir_
-                is_p = True
-        with open('listdir.txt', 'w') as f:
-            f.write(lines)
-    elif i == 12:
-        break
+    try:
+        i = int(input('Выберите пункт: '))
+        if i == 1:
+            os.mkdir(input('Введите название папки: '))
+        elif i == 2:
+            dir_ = input('Введите название файла/папки: ')
+            os.rmdir(dir_) if os.path.isdir(dir_) else os.remove(dir_)
+        elif i == 3:
+            dir1 = input('Введите название папки/файла: ')
+            dir2 = input('Введите новое название папки/файла: ')
+            shutil.copytree(dir1, dir2, False) if os.path.isdir(dir1) else shutil.copy(dir1, dir2,
+                                                                                       follow_symlinks=False)
+        elif i == 4:
+            print(os.listdir())
+        elif i == 5:
+            print([dir_ for dir_ in os.listdir() if os.path.isdir(dir_)])
+        elif i == 6:
+            print([dir_ for dir_ in os.listdir() if os.path.isfile(dir_)])
+        elif i == 7:
+            print(platform.system())
+        elif i == 8:
+            print('Создатель программы: Alex')
+        elif i == 9:
+            borndayforewer.day_year('А.С.Пушкина')
+        elif i == 10:
+            use_functions.bank()
+        elif i == 11:
+            lines = 'files: '
+            is_p = False
+            for dir_ in os.listdir():
+                if os.path.isfile(dir_):
+                    if is_p:
+                        lines += ', '
+                    lines += dir_
+                    is_p = True
+            lines += '\ndirs: '
+            is_p = False
+            for dir_ in os.listdir():
+                if os.path.isdir(dir_):
+                    if is_p:
+                        lines += ', '
+                    lines += dir_
+                    is_p = True
+            with open('listdir.txt', 'w') as f:
+                f.write(lines)
+        elif i == 12:
+            break
+    except:
+        print('Вы ввели не число')
